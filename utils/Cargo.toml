@@ -1,0 +1,12 @@
+[package]
+name = "utils"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ian Carey"]
+description = "Utils for Advent of Code"
+
+[lib]
+name = "utils"
+path = "src/lib.rs"
+
+[dependencies]

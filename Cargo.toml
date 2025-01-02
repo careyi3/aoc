@@ -1,0 +1,12 @@
+[package]
+name = "aoc"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ian Carey"]
+description = "Advent of Code 2015"
+
+
+[dependencies]
+y2015 = {path = "./y2015"}
+y2016 = {path = "./y2016"}
+utils = {path = "./utils"}

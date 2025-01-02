@@ -1,0 +1,34 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug executable 'aoc'",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=aoc",
+          "--package=aoc"
+        ],
+        "filter": {
+          "name": "aoc",
+          "kind": "bin"
+        }
+      },
+      "args": ["${input:args}"],
+      "cwd": "${workspaceFolder}"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "args",
+      "type": "promptString",
+      "description": "args to process",
+      "default": "2015 1 1 sample"
+    }
+  ]
+}

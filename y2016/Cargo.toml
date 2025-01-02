@@ -1,0 +1,13 @@
+[package]
+name = "y2016"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ian Carey"]
+description = "Advent of Code 2016"
+
+[lib]
+name = "y2016"
+path = "src/lib.rs"
+
+[dependencies]
+utils = { path = "../utils" }
