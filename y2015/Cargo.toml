@@ -11,3 +11,5 @@ path = "src/lib.rs"
 
 [dependencies]
 utils = { path = "../utils" }
+md5 = "0.7.0"
+fancy-regex = "0.14.0"

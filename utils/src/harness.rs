@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::time::Instant;
 
 pub trait Solve {
     fn part1(input: String, path: &String) -> String;
@@ -6,10 +7,24 @@ pub trait Solve {
     fn solve(part: i32, input: String, path: String) -> String {
         match part {
             1 => {
-                return Self::part1(input, &path);
+                let answer;
+                let now = Instant::now();
+                {
+                    answer = Self::part1(input, &path);
+                }
+                let elapsed = now.elapsed();
+                println!("Runtime: {:.2?}", elapsed);
+                return answer;
             }
             2 => {
-                return Self::part2(input, &path);
+                let answer;
+                let now = Instant::now();
+                {
+                    answer = Self::part2(input, &path);
+                }
+                let elapsed = now.elapsed();
+                println!("Runtime: {:.2?}", elapsed);
+                return answer;
             }
             _ => {
                 panic!()

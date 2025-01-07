@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 use std::env;
 use std::process;
-use std::time::Instant;
 
 use utils::harness::RunDay;
 
@@ -11,15 +10,9 @@ use y2016::Y2016;
 fn main() {
     let (year, day, part, input) = parse_args();
     let path = format!("./{}", input);
-    let answer;
     let func = fetch_func(year);
-    let now = Instant::now();
-    {
-        answer = func(day, part, input, path);
-    }
-    let elapsed = now.elapsed();
-    println!("Answer: {}", answer);
-    println!("Runtime: {:.2?}", elapsed);
+    let answer = func(day, part, input, path);
+    println!("Answer:\t{}", answer);
 }
 
 fn fetch_func(year: i32) -> fn(i32, i32, String, String) -> String {

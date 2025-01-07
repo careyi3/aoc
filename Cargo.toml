@@ -5,6 +5,8 @@ edition = "2021"
 authors = ["Ian Carey"]
 description = "Advent of Code 2015"
 
+[profile.release]
+opt-level = 3
 
 [dependencies]
 y2015 = {path = "./y2015"}
