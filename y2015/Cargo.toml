@@ -13,3 +13,4 @@ path = "src/lib.rs"
 utils = { path = "../utils" }
 md5 = "0.7.0"
 fancy-regex = "0.14.0"
+unescaper = "0.1.5"

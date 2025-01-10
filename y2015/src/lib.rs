@@ -5,6 +5,7 @@ pub mod d04;
 pub mod d05;
 pub mod d06;
 pub mod d07;
+pub mod d08;
 
 use d01::D01;
 use d02::D02;
@@ -13,6 +14,7 @@ use d04::D04;
 use d05::D05;
 use d06::D06;
 use d07::D07;
+use d08::D08;
 
 use std::collections::HashMap;
 use utils::harness::{RunDay, Solve};
@@ -29,6 +31,7 @@ impl RunDay for Y2015 {
             (5, D05::solve as fn(i32, String, String) -> String),
             (6, D06::solve as fn(i32, String, String) -> String),
             (7, D07::solve as fn(i32, String, String) -> String),
+            (8, D08::solve as fn(i32, String, String) -> String),
         ]);
     }
 }
