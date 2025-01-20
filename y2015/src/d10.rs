@@ -6,7 +6,7 @@ impl Solve for D10 {
     fn part1(_input: String, path: &String) -> String {
         let input = &file_reader::read_lines(path)[0];
 
-        let mut s = "".to_string();
+        let mut s: String;
         let mut new_s: String = input.clone();
         new_s.push('.');
         for _ in 0..40 {
@@ -36,7 +36,7 @@ impl Solve for D10 {
     fn part2(_input: String, path: &String) -> String {
         let input = &file_reader::read_lines(path)[0];
 
-        let mut s = "".to_string();
+        let mut s: String;
         let mut new_s: String = input.clone();
         new_s.push('.');
         for _ in 0..50 {
