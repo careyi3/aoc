@@ -9,7 +9,7 @@ use y2016::Y2016;
 
 fn main() {
     let (year, day, part, input) = parse_args();
-    let path = format!("./{}", input);
+    let path = format!("./inputs/{}/{}/{}", year, day, input);
     let func = fetch_func(year);
     let answer = func(day, part, input, path);
     println!("Answer:\t{}", answer);
