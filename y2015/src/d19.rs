@@ -1,4 +1,3 @@
-use fancy_regex::Regex;
 use std::collections::{HashMap, HashSet};
 use utils::{file_reader, harness::Solve};
 
@@ -11,7 +10,7 @@ impl Solve for D19 {
         let mut transitions = true;
         let mut rules: HashMap<String, Vec<String>> = HashMap::new();
         let mut molocule = "".to_string();
-        let molocules: HashSet<String> = HashSet::new();
+        let _molocules: HashSet<String> = HashSet::new();
         for input in inputs {
             if input == "".to_string() {
                 transitions = false;
@@ -27,14 +26,7 @@ impl Solve for D19 {
             }
         }
 
-        for key in rules.keys() {
-            let re = Regex::new(key).unwrap();
-
-            let num = re.find_iter(&molocule).count();
-            for _n in 0..num {}
-        }
-
-        return molocules.len().to_string();
+        return molocule.to_string();
     }
 
     fn part2(_input: String, path: &String) -> String {
