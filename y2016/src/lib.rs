@@ -1,8 +1,10 @@
 pub mod d01;
 pub mod d02;
+pub mod d03;
 
 use d01::D01;
 use d02::D02;
+use d03::D03;
 
 use std::collections::HashMap;
 use utils::harness::{RunDay, Solve};
@@ -14,6 +16,7 @@ impl RunDay for Y2016 {
         return HashMap::from([
             (1, D01::solve as fn(i32, String, String) -> String),
             (2, D02::solve as fn(i32, String, String) -> String),
+            (3, D03::solve as fn(i32, String, String) -> String),
         ]);
     }
 }
