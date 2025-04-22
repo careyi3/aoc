@@ -1,0 +1,12 @@
+[package]
+name = "macros"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ian Carey"]
+description = "Macros for Advent of Code"
+
+[lib]
+name = "macros"
+path = "src/lib.rs"
+
+[dependencies]

@@ -28,7 +28,7 @@
       "id": "args",
       "type": "promptString",
       "description": "args to process",
-      "default": "2015 1 1 sample"
+      "default": "2016 01 1 sample"
     }
   ]
 }

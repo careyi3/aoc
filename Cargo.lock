@@ -39,6 +39,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "automod"
+version = "1.0.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ebb4bd301db2e2ca1f5be131c24eb8ebf2d9559bc3744419e93baf8ddea7e670"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "bit-set"
 version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -204,6 +215,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "13dc2df351e3202783a1fe0d44375f7295ffb4049267b0f3018346dc122a1d94"
 
 [[package]]
+name = "macros"
+version = "0.1.0"
+
+[[package]]
 name = "md5"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -228,6 +243,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "37d3544b3f2748c54e147655edb5025752e2303145b5aefb3c3ea2c78b973bb0"
 dependencies = [
  "unicode-ident",
+]
+
+[[package]]
+name = "proc_macros"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -447,10 +471,13 @@ dependencies = [
 name = "y2015"
 version = "0.1.0"
 dependencies = [
+ "automod",
  "cached",
  "fancy-regex",
  "itertools",
+ "macros",
  "md5",
+ "proc_macros",
  "serde_json",
  "unescaper",
  "utils",
@@ -460,6 +487,9 @@ dependencies = [
 name = "y2016"
 version = "0.1.0"
 dependencies = [
+ "automod",
+ "macros",
+ "proc_macros",
  "utils",
 ]
 

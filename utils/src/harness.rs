@@ -34,9 +34,9 @@ pub trait Solve {
 }
 
 pub trait RunDay {
-    fn fetch_days() -> HashMap<i32, fn(i32, String, String) -> String>;
-    fn run_day(day: i32, part: i32, input: String, path: String) -> String {
-        let days: HashMap<i32, fn(i32, String, String) -> String> = Self::fetch_days();
+    fn fetch_days() -> HashMap<String, fn(i32, String, String) -> String>;
+    fn run_day(day: String, part: i32, input: String, path: String) -> String {
+        let days: HashMap<String, fn(i32, String, String) -> String> = Self::fetch_days();
         let func = days.get(&day).unwrap();
         return func(part, input, path);
     }

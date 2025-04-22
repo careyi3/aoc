@@ -1,8 +1,8 @@
 use utils::{file_reader, harness::Solve};
 
-pub struct D<num>;
+pub struct D04;
 
-impl Solve for D<num> {
+impl Solve for D04 {
     fn part1(_input: String, path: &String) -> String {
         let input = file_reader::read_lines(path);
 

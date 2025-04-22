@@ -1,0 +1,26 @@
+#! /bin/bash
+
+mkdir "inputs/${1}/${2}"
+
+touch "inputs/${1}/${2}/input"
+echo "input" > "inputs/${1}/${2}/input"
+touch "inputs/${1}/${2}/sample"
+echo "sample" > "inputs/${1}/${2}/sample"
+touch "y${1}/solutions/d${2}.rs"
+echo "use utils::{file_reader, harness::Solve};
+
+pub struct D${2};
+
+impl Solve for D${2} {
+    fn part1(_input: String, path: &String) -> String {
+        let input = file_reader::read_lines(path);
+
+        return input.first().unwrap().to_string();
+    }
+
+    fn part2(_input: String, path: &String) -> String {
+        let input = file_reader::read_lines(path);
+
+        return input.first().unwrap().to_string();
+    }
+}" > "y${1}/solutions/d${2}.rs"

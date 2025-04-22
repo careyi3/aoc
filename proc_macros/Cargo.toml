@@ -1,0 +1,16 @@
+[package]
+name = "proc_macros"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ian Carey"]
+description = "Proc Macros for Advent of Code"
+
+[lib]
+proc_macro = true
+name = "proc_macros"
+path = "src/lib.rs"
+
+[dependencies]
+syn = "2.0"
+quote = "1.0"
+proc-macro2 = "1.0.74"

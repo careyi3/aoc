@@ -15,21 +15,21 @@ fn main() {
     println!("Answer:\t{}", answer);
 }
 
-fn fetch_func(year: i32) -> fn(i32, i32, String, String) -> String {
+fn fetch_func(year: i32) -> fn(String, i32, String, String) -> String {
     let years = HashMap::from([
         (
             2015,
-            Y2015::run_day as fn(i32, i32, String, String) -> String,
+            Y2015::run_day as fn(String, i32, String, String) -> String,
         ),
         (
             2016,
-            Y2016::run_day as fn(i32, i32, String, String) -> String,
+            Y2016::run_day as fn(String, i32, String, String) -> String,
         ),
     ]);
     return *years.get(&year).unwrap();
 }
 
-fn parse_args() -> (i32, i32, i32, String) {
+fn parse_args() -> (i32, String, i32, String) {
     let mut args: Vec<String> = env::args().collect();
     let year_num;
     let day_num;

@@ -7,10 +7,13 @@ description = "Advent of Code 2015"
 
 [lib]
 name = "y2015"
-path = "src/lib.rs"
+path = "lib.rs"
 
 [dependencies]
 utils = { path = "../utils" }
+macros = { path = "../macros" }
+proc_macros = { path = "../proc_macros" }
+automod = "1.0"
 md5 = "0.7.0"
 fancy-regex = "0.14.0"
 unescaper = "0.1.5"
