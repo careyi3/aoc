@@ -14,3 +14,4 @@ utils = { path = "../utils" }
 macros = { path = "../macros" }
 proc_macros = { path = "../proc_macros" }
 automod = "1.0"
+md5 = "0.7.0"

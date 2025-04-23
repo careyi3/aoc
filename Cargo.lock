@@ -489,6 +489,7 @@ version = "0.1.0"
 dependencies = [
  "automod",
  "macros",
+ "md5",
  "proc_macros",
  "utils",
 ]
