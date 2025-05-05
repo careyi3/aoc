@@ -33,12 +33,27 @@ impl Solve for D07 {
         let inputs = file_reader::read_lines(path);
 
         let mut count = 0;
-        for input in inputs {
+        'outer: for input in inputs {
             let words: Vec<String> = input.split(['[', ']']).map(|x| x.to_string()).collect();
-            let mut has_repeat = false;
+            let mut outsides: Vec<String> = vec![];
+            let mut insides: Vec<String> = vec![];
             for (idx, word) in words.iter().enumerate() {
-                let patterns = fetch_pattern(word);
-
+                let mut patterns = fetch_pattern(word);
+                if (idx + 1) % 2 == 0 {
+                    outsides.append(&mut patterns);
+                } else {
+                    insides.append(&mut patterns);
+                }
+            }
+            for outer in &outsides {
+                for inner in &insides {
+                    if outer.as_bytes()[0] == inner.as_bytes()[1]
+                        && outer.as_bytes()[1] == inner.as_bytes()[0]
+                    {
+                        count += 1;
+                        continue 'outer;
+                    }
+                }
             }
         }
 
@@ -71,7 +86,7 @@ fn fetch_pattern(word: &String) -> Vec<String> {
             buffer.push(letter);
             if buffer[0] == buffer[2] && buffer[0] != buffer[1] {
                 patterns.push(buffer.iter().collect());
-            }ff
+            }
             buffer.remove(0);
         } else {
             buffer.push(letter);
