@@ -488,6 +488,7 @@ name = "y2016"
 version = "0.1.0"
 dependencies = [
  "automod",
+ "fancy-regex",
  "macros",
  "md5",
  "proc_macros",
