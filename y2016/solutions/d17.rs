@@ -1,5 +1,4 @@
 use md5::compute;
-use std::collections::HashSet;
 
 use utils::{file_reader, harness::Solve};
 
@@ -11,9 +10,8 @@ impl Solve for D17 {
         let password = inputs.first().unwrap().clone();
 
         let mut paths: Vec<String> = vec![];
-        let mut cache: HashSet<String> = HashSet::new();
 
-        walk(&password, 0, 0, &"".to_string(), &mut paths, &mut cache);
+        walk(&password, 0, 0, &"".to_string(), &mut paths);
 
         paths.sort_by(|x, y| x.len().cmp(&y.len()));
 
@@ -27,9 +25,8 @@ impl Solve for D17 {
         let password = inputs.first().unwrap().clone();
 
         let mut paths: Vec<String> = vec![];
-        let mut cache: HashSet<String> = HashSet::new();
 
-        walk(&password, 0, 0, &"".to_string(), &mut paths, &mut cache);
+        walk(&password, 0, 0, &"".to_string(), &mut paths);
 
         paths.sort_by(|x, y| x.len().cmp(&y.len()));
 
@@ -45,18 +42,7 @@ impl Solve for D17 {
     }
 }
 
-fn walk(
-    password: &String,
-    x: i32,
-    y: i32,
-    path: &String,
-    paths: &mut Vec<String>,
-    cache: &mut HashSet<String>,
-) {
-    if cache.contains(path) {
-        return;
-    }
-    cache.insert(path.clone());
+fn walk(password: &String, x: i32, y: i32, path: &String, paths: &mut Vec<String>) {
     if x == 3 && y == 3 {
         paths.push(path.clone());
         return;
@@ -66,7 +52,7 @@ fn walk(
         if is_open(x, y, &password, &path, dir) {
             let mut new_path = path.clone();
             new_path.push(dir_chars[dir]);
-            walk(password, x + *new_x, y + *new_y, &new_path, paths, cache);
+            walk(password, x + *new_x, y + *new_y, &new_path, paths);
         }
     }
 }
