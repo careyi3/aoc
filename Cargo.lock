@@ -528,6 +528,7 @@ version = "0.1.0"
 dependencies = [
  "automod",
  "fancy-regex",
+ "itertools",
  "macros",
  "md5",
  "priority-queue",
