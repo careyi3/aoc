@@ -542,6 +542,7 @@ name = "y2017"
 version = "0.1.0"
 dependencies = [
  "automod",
+ "itertools",
  "macros",
  "proc_macros",
  "utils",
