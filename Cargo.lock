@@ -36,6 +36,7 @@ dependencies = [
  "utils",
  "y2015",
  "y2016",
+ "y2017",
 ]
 
 [[package]]
@@ -532,6 +533,16 @@ dependencies = [
  "macros",
  "md5",
  "priority-queue",
+ "proc_macros",
+ "utils",
+]
+
+[[package]]
+name = "y2017"
+version = "0.1.0"
+dependencies = [
+ "automod",
+ "macros",
  "proc_macros",
  "utils",
 ]

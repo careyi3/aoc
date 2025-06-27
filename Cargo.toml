@@ -11,4 +11,5 @@ opt-level = 3
 [dependencies]
 y2015 = {path = "./y2015"}
 y2016 = {path = "./y2016"}
+y2017 = {path = "./y2017"}
 utils = {path = "./utils"}
