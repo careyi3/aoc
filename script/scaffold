@@ -24,3 +24,5 @@ impl Solve for D${2} {
         return input.first().unwrap().to_string();
     }
 }" > "y${1}/solutions/d${2}.rs"
+
+rm -rf ./target
