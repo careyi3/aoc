@@ -42,7 +42,17 @@ aoc/inputs
 
 See below for all of the supported years.
 
-| Year |
-| --- |
-| [2015](./y2015/solutions) |
-| [2016](./y2016/solutions) |
+| Year | Stars |
+| --- | --- |
+| [2015](./y2015/solutions) | 47 |
+| [2016](./y2016/solutions) | 47 |
+| [2017](./y2017/solutions) | 40 (in progress) |
+
+## TODOs
+
+I haven't been able to solve every day of every year, the following is a list for me to go back to attempt to solve days I couldn't solve and so I skipped.
+
+| Year | Day | Part |
+| --- | --- | --- |
+| 2015 | 19 | 1 & 2 |
+| 2016 | 11 | 1 & 2 |
