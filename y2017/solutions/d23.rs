@@ -1,4 +1,4 @@
-use pprint::{Doc, Printer, PRINTER};
+use pprint::{Doc, PRINTER};
 use std::collections::HashMap;
 use utils::{file_reader, harness::Solve};
 
