@@ -46,7 +46,8 @@ See below for all of the supported years.
 | --- | --- |
 | [2015](./y2015/solutions) | 47 |
 | [2016](./y2016/solutions) | 47 |
-| [2017](./y2017/solutions) | 40 (in progress) |
+| [2017](./y2017/solutions) | 46 |
+| [2018](./y2018/solutions) | 6 |
 
 ## TODOs
 

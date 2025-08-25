@@ -7,6 +7,7 @@ use utils::harness::RunDay;
 use y2015::Y2015;
 use y2016::Y2016;
 use y2017::Y2017;
+use y2018::Y2018;
 
 fn main() {
     let (year, day, part, input) = parse_args();
@@ -29,6 +30,10 @@ fn fetch_func(year: i32) -> fn(String, i32, String, String) -> String {
         (
             2017,
             Y2017::run_day as fn(String, i32, String, String) -> String,
+        ),
+        (
+            2018,
+            Y2018::run_day as fn(String, i32, String, String) -> String,
         ),
     ]);
     return *years.get(&year).unwrap();

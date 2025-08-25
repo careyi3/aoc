@@ -12,4 +12,5 @@ opt-level = 3
 y2015 = {path = "./y2015"}
 y2016 = {path = "./y2016"}
 y2017 = {path = "./y2017"}
+y2018 = {path = "./y2018"}
 utils = {path = "./utils"}

@@ -37,6 +37,7 @@ dependencies = [
  "y2015",
  "y2016",
  "y2017",
+ "y2018",
 ]
 
 [[package]]
@@ -589,6 +590,16 @@ dependencies = [
  "itertools",
  "macros",
  "pprint",
+ "proc_macros",
+ "utils",
+]
+
+[[package]]
+name = "y2018"
+version = "0.1.0"
+dependencies = [
+ "automod",
+ "macros",
  "proc_macros",
  "utils",
 ]
