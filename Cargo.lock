@@ -606,6 +606,7 @@ version = "0.1.0"
 dependencies = [
  "automod",
  "edit-distance",
+ "fancy-regex",
  "itertools",
  "macros",
  "proc_macros",
