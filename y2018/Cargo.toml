@@ -14,6 +14,7 @@ utils = { path = "../utils" }
 macros = { path = "../macros" }
 proc_macros = { path = "../proc_macros" }
 automod = "1.0"
-itertools = "0.8.2"
+itertools = "0.14.0"
 edit-distance = "2.1.3"
 fancy-regex = "0.14.0"
+chrono = "0.4"
