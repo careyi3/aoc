@@ -1,42 +1,28 @@
-use std::collections::HashMap;
 use std::env;
 use std::process;
 
-use utils::harness::RunDay;
+use utils::harness::get_year_runner;
 
+#[allow(unused_imports)]
 use y2015::Y2015;
+#[allow(unused_imports)]
 use y2016::Y2016;
+#[allow(unused_imports)]
 use y2017::Y2017;
+#[allow(unused_imports)]
 use y2018::Y2018;
 
 fn main() {
     let (year, day, part, input) = parse_args();
     let path = format!("./inputs/{}/{}/{}", year, day, input);
-    let func = fetch_func(year);
+
+    let func = get_year_runner(year).unwrap_or_else(|| {
+        eprintln!("error: year {} not found", year);
+        process::exit(1);
+    });
+
     let answer = func(day, part, input, path);
     println!("Answer:\t{}", answer);
-}
-
-fn fetch_func(year: i32) -> fn(String, i32, String, String) -> String {
-    let years = HashMap::from([
-        (
-            2015,
-            Y2015::run_day as fn(String, i32, String, String) -> String,
-        ),
-        (
-            2016,
-            Y2016::run_day as fn(String, i32, String, String) -> String,
-        ),
-        (
-            2017,
-            Y2017::run_day as fn(String, i32, String, String) -> String,
-        ),
-        (
-            2018,
-            Y2018::run_day as fn(String, i32, String, String) -> String,
-        ),
-    ]);
-    return *years.get(&year).unwrap();
 }
 
 fn parse_args() -> (i32, String, i32, String) {

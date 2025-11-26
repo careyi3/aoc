@@ -10,3 +10,6 @@ name = "utils"
 path = "src/lib.rs"
 
 [dependencies]
+anyhow = "1"
+thiserror = "1"
+inventory = "0.3"

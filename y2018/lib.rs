@@ -15,7 +15,10 @@ pub struct Y2018;
 
 impl RunDay for Y2018 {
     fn fetch_days() -> HashMap<String, fn(i32, String, String) -> String> {
-        let days = Y2018::get_days();
-        return days;
+        Y2018::get_days()
     }
+}
+
+inventory::submit! {
+    utils::harness::YearRunner::new(2018, Y2018::run_day)
 }

@@ -45,9 +45,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "anyhow"
+version = "1.0.100"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a23eb6b1614318a8071c9b2521f36b424b2c83db5eb3a0fead4a6c0809af6e61"
+
+[[package]]
 name = "aoc"
 version = "0.1.0"
 dependencies = [
+ "inventory",
  "utils",
  "y2015",
  "y2016",
@@ -285,6 +292,15 @@ checksum = "cea70ddb795996207ad57735b50c5982d8844f38ba9ee5f1aedcfb708a2aa11e"
 dependencies = [
  "equivalent",
  "hashbrown 0.15.3",
+]
+
+[[package]]
+name = "inventory"
+version = "0.3.21"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bc61209c082fbeb19919bee74b176221b27223e27b65d781eb91af24eb1fb46e"
+dependencies = [
+ "rustversion",
 ]
 
 [[package]]
@@ -588,6 +604,11 @@ checksum = "adb9e6ca4f869e1180728b7950e35922a7fc6397f7b641499e8f3ef06e50dc83"
 [[package]]
 name = "utils"
 version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "inventory",
+ "thiserror 1.0.69",
+]
 
 [[package]]
 name = "version_check"
@@ -729,6 +750,7 @@ dependencies = [
  "automod",
  "cached",
  "fancy-regex",
+ "inventory",
  "itertools 0.8.2",
  "macros",
  "md5",
@@ -744,6 +766,7 @@ version = "0.1.0"
 dependencies = [
  "automod",
  "fancy-regex",
+ "inventory",
  "itertools 0.8.2",
  "macros",
  "md5",
@@ -757,6 +780,7 @@ name = "y2017"
 version = "0.1.0"
 dependencies = [
  "automod",
+ "inventory",
  "itertools 0.8.2",
  "macros",
  "pprint",
@@ -768,10 +792,12 @@ dependencies = [
 name = "y2018"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "automod",
  "chrono",
  "edit-distance",
  "fancy-regex",
+ "inventory",
  "itertools 0.14.0",
  "macros",
  "proc_macros",

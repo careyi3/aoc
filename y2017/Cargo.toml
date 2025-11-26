@@ -16,3 +16,4 @@ proc_macros = { path = "../proc_macros" }
 automod = "1.0"
 itertools = "0.8.2"
 pprint = "0.2.2"
+inventory = "0.3"
