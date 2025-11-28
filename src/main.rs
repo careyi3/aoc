@@ -11,6 +11,8 @@ use y2016::Y2016;
 use y2017::Y2017;
 #[allow(unused_imports)]
 use y2018::Y2018;
+#[allow(unused_imports)]
+use y2025::Y2025;
 
 fn main() {
     let (year, day, part, input) = parse_args();

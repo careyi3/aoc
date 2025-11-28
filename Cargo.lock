@@ -60,6 +60,7 @@ dependencies = [
  "y2016",
  "y2017",
  "y2018",
+ "y2025",
 ]
 
 [[package]]
@@ -799,6 +800,18 @@ dependencies = [
  "fancy-regex",
  "inventory",
  "itertools 0.14.0",
+ "macros",
+ "proc_macros",
+ "utils",
+]
+
+[[package]]
+name = "y2025"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "automod",
+ "inventory",
  "macros",
  "proc_macros",
  "utils",

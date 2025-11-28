@@ -1,0 +1,18 @@
+[package]
+name = "y2025"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ian Carey"]
+description = "Advent of Code 2025"
+
+[lib]
+name = "y2025"
+path = "lib.rs"
+
+[dependencies]
+utils = { path = "../utils" }
+macros = { path = "../macros" }
+proc_macros = { path = "../proc_macros" }
+anyhow = "1"
+automod = "1.0"
+inventory = "0.3"
