@@ -47,7 +47,8 @@ See below for all of the supported years.
 | [2015](./y2015/solutions) | 47 |
 | [2016](./y2016/solutions) | 47 |
 | [2017](./y2017/solutions) | 46 |
-| [2018](./y2018/solutions) | 14 (in progress) |
+| [2018](./y2018/solutions) | 29 |
+| [2025](./y2025/solutions) | 0 |
 
 ## TODOs
 
@@ -59,3 +60,5 @@ I haven't been able to solve every day of every year, the following is a list fo
 | 2016 | 11 | 1 & 2 |
 | 2017 | 21 | 1 & 2 |
 | 2017 | 23 | 2 |
+| 2018 | 15 | 1 & 2 |
+| 2018 | 16 | 2 |
