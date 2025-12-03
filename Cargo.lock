@@ -812,6 +812,7 @@ dependencies = [
  "anyhow",
  "automod",
  "inventory",
+ "itertools 0.14.0",
  "macros",
  "proc_macros",
  "utils",
