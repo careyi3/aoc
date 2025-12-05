@@ -38,10 +38,10 @@ pub struct Metadata {
 
 #[derive(Serialize, Deserialize)]
 pub struct Frame {
-    step: usize,
-    grid: Vec<Vec<u8>>,
-    message: String,
-    highlighted: Vec<(usize, usize)>,
+    pub step: usize,
+    pub grid: Vec<Vec<u8>>,
+    pub message: String,
+    pub highlighted: Vec<(usize, usize)>,
 }
 
 #[derive(Copy, Clone, Eq, PartialEq)]
@@ -62,16 +62,22 @@ impl PartialOrd for State {
     }
 }
 
-pub fn save_annimation_data(output_name: String, width: usize, height: usize, frames: Vec<Frame>) {
+pub fn save_annimation_data(
+    output_name: String,
+    width: usize,
+    height: usize,
+    frames: Vec<Frame>,
+    frame_rate: f64,
+) {
     let animation = AnimationData {
         name: output_name.clone(),
-        algorithm: "conways_game_of_life".to_string(),
+        algorithm: output_name.clone(),
         created_at: Utc::now().to_rfc3339(),
         grid_config: GridConfig { width, height },
         metadata: Metadata {
             total_frames: frames.len(),
             has_path: false,
-            frame_delay_ms: 100.0,
+            frame_delay_ms: frame_rate,
         },
         frames,
     };

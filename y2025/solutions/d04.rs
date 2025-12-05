@@ -1,7 +1,9 @@
 use std::collections::HashSet;
 
 use anyhow::Result;
-use utils::{file_reader, harness::SolveResult};
+use utils::{
+    annimations::save_annimation_data, annimations::Frame, file_reader, harness::SolveResult,
+};
 
 pub struct D04;
 
@@ -52,6 +54,8 @@ impl SolveResult for D04 {
         }
 
         let mut count = 0;
+        let mut frames: Vec<Frame> = vec![];
+        let mut step = 0;
         loop {
             let mut to_remove: Vec<(i32, i32)> = vec![];
             for (x, y) in &map {
@@ -61,12 +65,17 @@ impl SolveResult for D04 {
                 }
             }
             if to_remove.len() == 0 {
+                frames.push(generate_frame(&map, &to_remove, step));
                 break;
             }
-            for coords in to_remove {
+            for coords in &to_remove {
                 map.remove(&coords);
             }
+            frames.push(generate_frame(&map, &to_remove, step));
+            step += 1;
         }
+
+        save_annimation_data("2025_day_4".to_string(), 140, 140, frames, 250.0);
 
         return Ok(count.to_string());
     }
@@ -82,4 +91,31 @@ fn count_adjacent(map: &HashSet<(i32, i32)>, x: i32, y: i32) -> i32 {
         }
     }
     return count;
+}
+
+fn generate_frame(map: &HashSet<(i32, i32)>, to_remove: &Vec<(i32, i32)>, step: usize) -> Frame {
+    let mut grid: Vec<Vec<u8>> = vec![];
+    for y in 0..140 {
+        let mut line = vec![];
+        for x in 0..140 {
+            if map.contains(&(x, y)) {
+                line.push(1);
+            } else {
+                line.push(0);
+            }
+        }
+        grid.push(line);
+    }
+
+    let highlighted = to_remove
+        .iter()
+        .map(|(x, y)| (*x as usize, *y as usize))
+        .collect();
+
+    return Frame {
+        step,
+        message: format!("Iteration: {}", step),
+        grid,
+        highlighted,
+    };
 }
