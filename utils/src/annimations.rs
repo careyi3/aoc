@@ -16,7 +16,6 @@ pub enum CellState {
 #[derive(Serialize, Deserialize)]
 pub struct AnimationData {
     name: String,
-    algorithm: String,
     created_at: String,
     grid_config: GridConfig,
     metadata: Metadata,
@@ -71,7 +70,6 @@ pub fn save_annimation_data(
 ) {
     let animation = AnimationData {
         name: output_name.clone(),
-        algorithm: output_name.clone(),
         created_at: Utc::now().to_rfc3339(),
         grid_config: GridConfig { width, height },
         metadata: Metadata {

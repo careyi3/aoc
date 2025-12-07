@@ -1,6 +1,8 @@
 use anyhow::Result;
 use std::collections::{HashMap, HashSet};
-use utils::{file_reader, harness::SolveResult};
+use utils::{
+    annimations::save_annimation_data, annimations::Frame, file_reader, harness::SolveResult,
+};
 
 pub struct D07;
 
@@ -19,7 +21,18 @@ impl SolveResult for D07 {
         }
 
         let mut splits: HashSet<(i32, i32)> = HashSet::new();
-        walk(&map, start.0, start.1, &mut splits);
+        let mut visited: Vec<(i32, i32)> = vec![];
+        let mut frames: Vec<Frame> = vec![];
+        walk(
+            &map,
+            start.0,
+            start.1,
+            &mut splits,
+            &mut visited,
+            &mut frames,
+        );
+
+        save_annimation_data("2025_day_7".to_string(), 16, 16, frames, 200.00);
 
         return Ok(splits.len().to_string());
     }
@@ -44,16 +57,25 @@ impl SolveResult for D07 {
     }
 }
 
-fn walk(map: &HashMap<(i32, i32), char>, x: i32, y: i32, splits: &mut HashSet<(i32, i32)>) {
-    if !map.contains_key(&(x, y)) || splits.contains(&(x, y)) {
+fn walk(
+    map: &HashMap<(i32, i32), char>,
+    x: i32,
+    y: i32,
+    splits: &mut HashSet<(i32, i32)>,
+    visited: &mut Vec<(i32, i32)>,
+    frames: &mut Vec<Frame>,
+) {
+    if !map.contains_key(&(x, y)) || splits.contains(&(x, y)) || visited.contains(&(x, y)) {
         return;
     }
+    visited.push((x, y));
+    frames.push(generate_frame(map, visited));
     if map[&(x, y)] != '^' {
-        walk(map, x, y + 1, splits);
+        walk(map, x, y + 1, splits, visited, frames);
     } else {
         splits.insert((x, y));
-        walk(map, x - 1, y + 1, splits);
-        walk(map, x + 1, y + 1, splits);
+        walk(map, x - 1, y + 1, splits, visited, frames);
+        walk(map, x + 1, y + 1, splits, visited, frames);
     }
 }
 
@@ -78,4 +100,39 @@ fn walk_quantum(
     }
     cache.insert((x, y), count);
     return count;
+}
+
+fn generate_frame(map: &HashMap<(i32, i32), char>, visited: &Vec<(i32, i32)>) -> Frame {
+    let mut grid: Vec<Vec<u8>> = vec![];
+    for y in 0..16 {
+        let mut line = vec![];
+        for x in 0..16 {
+            if map.contains_key(&(x, y)) {
+                match *map.get(&(x, y)).unwrap() {
+                    '.' => {
+                        line.push(0);
+                    }
+                    '^' => {
+                        line.push(2);
+                    }
+                    _ => {}
+                }
+            } else {
+                line.push(0);
+            }
+        }
+        grid.push(line);
+    }
+
+    let highlighted = visited
+        .iter()
+        .map(|(x, y)| (*x as usize, *y as usize))
+        .collect();
+
+    return Frame {
+        step: visited.len(),
+        message: format!("Iteration: {}", visited.len()),
+        grid,
+        highlighted,
+    };
 }
