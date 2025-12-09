@@ -55,20 +55,26 @@ impl SolveResult for D09 {
             }
         }
 
-        let mut largest = 0;
-        for combo in points.iter().combinations(2) {
-            let a = combo[0];
-            let b = combo[1];
-            let area = ((b.0 - a.0).abs() + 1) * ((b.1 - a.1).abs() + 1);
+        let mut rectangles: Vec<((i64, i64), (i64, i64), i64)> = points
+            .iter()
+            .combinations(2)
+            .map(|combo| {
+                let a = *combo[0];
+                let b = *combo[1];
+                let area = ((b.0 - a.0).abs() + 1) * ((b.1 - a.1).abs() + 1);
+                (a, b, area)
+            })
+            .collect();
 
-            if rectangle_valid(&a, b, &polygon_path) {
-                if area > largest {
-                    largest = area;
-                }
+        rectangles.sort_by(|x, y| y.2.cmp(&x.2));
+
+        for (a, b, area) in rectangles {
+            if rectangle_valid(&a, &b, &polygon_path) {
+                return Ok(area.to_string());
             }
         }
 
-        return Ok(largest.to_string());
+        return Ok("0".to_string());
     }
 }
 
