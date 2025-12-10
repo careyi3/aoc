@@ -1,5 +1,5 @@
 use anyhow::Result;
-use std::collections::HashMap;
+use std::collections::{HashSet, VecDeque};
 use utils::{file_reader, harness::SolveResult};
 
 pub struct D10;
@@ -58,26 +58,31 @@ impl SolveResult for D10 {
         }
 
         let mut sum = 0;
-        for (idx, machine) in machines.iter().enumerate() {
-            let mut cache: HashMap<Vec<bool>, usize> = HashMap::new();
-            let mut state = vec![];
-            for _ in &machine.indicators {
-                state.push(false);
+        for machine in &machines {
+            let mut queue: VecDeque<(Vec<bool>, usize)> = VecDeque::new();
+            let mut cache: HashSet<Vec<bool>> = HashSet::new();
+            queue.push_back((vec![false; machine.indicators.len()], 0));
+            let depth;
+            'outer: loop {
+                let state = queue.pop_back().unwrap();
+                cache.insert(state.0.clone());
+                if state.0 == machine.indicators {
+                    depth = state.1;
+                    break 'outer;
+                }
+                for (idx, _) in machine.buttons.iter().enumerate() {
+                    let new_state = press_indicator(machine, state.clone(), idx);
+                    if new_state.0 == machine.indicators {
+                        depth = new_state.1;
+                        break 'outer;
+                    }
+                    if !cache.contains(&new_state.0) {
+                        cache.insert(new_state.0.clone());
+                        queue.push_front(new_state);
+                    }
+                }
             }
-            let mut counts: Vec<_> = vec![];
-            for (button_idx, _) in machine.buttons.iter().enumerate() {
-                counts.push(configure_indicators(
-                    &machine,
-                    state.clone(),
-                    vec![],
-                    button_idx,
-                    &mut 10,
-                    &mut cache,
-                ));
-            }
-            let min = counts.iter().min().unwrap();
-            println!("{}: {}", idx, min);
-            sum += min;
+            sum += depth;
         }
 
         return Ok(sum.to_string());
@@ -93,149 +98,55 @@ impl SolveResult for D10 {
         }
 
         let mut sum = 0;
-        for (idx, machine) in machines.iter().enumerate() {
-            let mut cache: HashMap<Vec<i32>, usize> = HashMap::new();
-            let mut state = vec![];
-            for _ in &machine.joltages {
-                state.push(0);
+        for machine in &machines {
+            let mut queue: VecDeque<(Vec<i32>, usize)> = VecDeque::new();
+            let mut cache: HashSet<Vec<i32>> = HashSet::new();
+            queue.push_back((vec![0; machine.joltages.len()], 0));
+            let depth;
+            'outer: loop {
+                let state = queue.pop_back().unwrap();
+                cache.insert(state.0.clone());
+                if state.0 == machine.joltages {
+                    depth = state.1;
+                    break 'outer;
+                }
+                for (idx, _) in machine.buttons.iter().enumerate() {
+                    let new_state = press_joltage(machine, state.clone(), idx);
+                    if new_state.0 == machine.joltages {
+                        depth = new_state.1;
+                        break 'outer;
+                    }
+                    if !cache.contains(&new_state.0) {
+                        cache.insert(new_state.0.clone());
+                        queue.push_front(new_state);
+                    }
+                }
             }
-            let mut counts: Vec<_> = vec![];
-            for (button_idx, _) in machine.buttons.iter().enumerate() {
-                counts.push(configure_joltages(
-                    &machine,
-                    state.clone(),
-                    vec![],
-                    button_idx,
-                    &mut 15,
-                    &mut cache,
-                ));
-            }
-            let min = counts.iter().min().unwrap();
-            println!("{}: {}", idx, min);
-            sum += min;
+            sum += depth;
         }
 
         return Ok(sum.to_string());
     }
 }
 
-fn configure_indicators(
+fn press_indicator(
     machine: &Machine,
-    mut state: Vec<bool>,
-    mut presses: Vec<usize>,
-    to_press: usize,
-    shortest: &mut usize,
-    cache: &mut HashMap<Vec<bool>, usize>,
-) -> usize {
-    if cache.contains_key(&state.clone()) && cache[&state.clone()] <= presses.len() {
-        return cache[&state];
+    state: (Vec<bool>, usize),
+    button: usize,
+) -> (Vec<bool>, usize) {
+    let mut new_state = state.clone();
+    for indicator in &machine.buttons[button] {
+        new_state.0[*indicator] = !new_state.0[*indicator];
     }
-    if presses.len() >= *shortest {
-        cache.insert(state, presses.len());
-        return presses.len();
-    }
-    if machine.indicators == state {
-        if presses.len() < *shortest {
-            *shortest = presses.len();
-        }
-        cache.insert(state, presses.len());
-        return presses.len();
-    }
-    presses.push(to_press);
-
-    press_indicators(machine, &mut state, to_press);
-
-    let mut temp_presses: Vec<usize> = vec![];
-    for (button_idx, _) in machine.buttons.iter().enumerate() {
-        if button_idx == to_press {
-            continue;
-        }
-        let count = configure_indicators(
-            machine,
-            state.clone(),
-            presses.clone(),
-            button_idx,
-            shortest,
-            cache,
-        );
-        temp_presses.push(count);
-    }
-
-    let temp_shortest = *temp_presses.iter().min().unwrap();
-
-    if temp_shortest < *shortest {
-        *shortest = temp_shortest;
-    }
-
-    cache.insert(state, temp_shortest);
-
-    return temp_shortest;
+    new_state.1 += 1;
+    new_state
 }
 
-fn press_indicators(machine: &Machine, state: &mut Vec<bool>, button_idx: usize) {
-    for indicator in &machine.buttons[button_idx] {
-        state[*indicator] = !state[*indicator];
+fn press_joltage(machine: &Machine, state: (Vec<i32>, usize), button: usize) -> (Vec<i32>, usize) {
+    let mut new_state = state.clone();
+    for indicator in &machine.buttons[button] {
+        new_state.0[*indicator] += 1;
     }
-}
-
-fn configure_joltages(
-    machine: &Machine,
-    mut state: Vec<i32>,
-    mut presses: Vec<usize>,
-    to_press: usize,
-    shortest: &mut usize,
-    cache: &mut HashMap<Vec<i32>, usize>,
-) -> usize {
-    if cache.contains_key(&state.clone()) && cache[&state.clone()] <= presses.len() {
-        return cache[&state];
-    }
-    for (idx, joltage) in machine.joltages.iter().enumerate() {
-        if state[idx] > *joltage {
-            cache.insert(state, 15);
-            return 15;
-        }
-    }
-    if presses.len() >= *shortest {
-        cache.insert(state, 15);
-        return 15;
-    }
-    if machine.joltages == state {
-        if presses.len() < *shortest {
-            *shortest = presses.len();
-        }
-        cache.insert(state, presses.len());
-        return presses.len();
-    }
-    presses.push(to_press);
-
-    press_joltages(machine, &mut state, to_press);
-
-    let mut temp_presses: Vec<usize> = vec![];
-    for (button_idx, _) in machine.buttons.iter().enumerate() {
-        let count = configure_joltages(
-            machine,
-            state.clone(),
-            presses.clone(),
-            button_idx,
-            shortest,
-            cache,
-        );
-        temp_presses.push(count);
-    }
-
-    let temp_shortest = *temp_presses.iter().min().unwrap();
-
-    if temp_shortest < *shortest {
-        *shortest = temp_shortest;
-    }
-
-    cache.insert(state, temp_shortest);
-
-    return temp_shortest;
-}
-
-fn press_joltages(machine: &Machine, state: &mut Vec<i32>, button_idx: usize) {
-    for indicator in &machine.buttons[button_idx] {
-        state[*indicator] += 1;
-    }
+    new_state.1 += 1;
+    new_state
 }
