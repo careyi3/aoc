@@ -1,4 +1,5 @@
 use anyhow::Result;
+use good_lp::*;
 use std::collections::{HashSet, VecDeque};
 use utils::{file_reader, harness::SolveResult};
 
@@ -91,41 +92,48 @@ impl SolveResult for D10 {
     fn part2(_input: String, path: &String) -> Result<String> {
         let input = file_reader::read_lines(path);
 
-        let mut machines: Vec<Machine> = vec![];
-        for line in &input {
-            let machine = parse_line(line);
-            machines.push(machine);
-        }
+        let machines: Vec<Machine> = input.iter().map(|line| parse_line(line)).collect();
 
-        let mut sum = 0;
-        for machine in &machines {
-            let mut queue: VecDeque<(Vec<i32>, usize)> = VecDeque::new();
-            let mut cache: HashSet<Vec<i32>> = HashSet::new();
-            queue.push_back((vec![0; machine.joltages.len()], 0));
-            let depth;
-            'outer: loop {
-                let state = queue.pop_back().unwrap();
-                cache.insert(state.0.clone());
-                if state.0 == machine.joltages {
-                    depth = state.1;
-                    break 'outer;
-                }
-                for (idx, _) in machine.buttons.iter().enumerate() {
-                    let new_state = press_joltage(machine, state.clone(), idx);
-                    if new_state.0 == machine.joltages {
-                        depth = new_state.1;
-                        break 'outer;
-                    }
-                    if !cache.contains(&new_state.0) {
-                        cache.insert(new_state.0.clone());
-                        queue.push_front(new_state);
-                    }
-                }
+        let sum: usize = machines.iter().map(|machine| solve_joltage(machine)).sum();
+
+        Ok(sum.to_string())
+    }
+}
+
+fn solve_joltage(machine: &Machine) -> usize {
+    let mut problem = ProblemVariables::new();
+
+    let button_vars: Vec<Variable> = (0..machine.buttons.len())
+        .map(|_| problem.add(variable().integer().min(0)))
+        .collect();
+
+    let mut constraints = vec![];
+
+    for (indicator_idx, &target) in machine.joltages.iter().enumerate() {
+        let mut expr = Expression::from(0);
+
+        for (button_idx, button) in machine.buttons.iter().enumerate() {
+            if button.contains(&indicator_idx) {
+                expr = expr + button_vars[button_idx];
             }
-            sum += depth;
         }
 
-        return Ok(sum.to_string());
+        constraints.push(expr.eq(target));
+    }
+
+    let objective: Expression = button_vars.iter().sum();
+
+    let mut model = problem.minimise(objective).using(highs);
+    for constraint in constraints {
+        model = model.with(constraint);
+    }
+
+    match model.solve() {
+        Ok(sol) => button_vars
+            .iter()
+            .map(|&v| sol.value(v).round() as usize)
+            .sum(),
+        Err(_) => 0,
     }
 }
 
@@ -137,15 +145,6 @@ fn press_indicator(
     let mut new_state = state.clone();
     for indicator in &machine.buttons[button] {
         new_state.0[*indicator] = !new_state.0[*indicator];
-    }
-    new_state.1 += 1;
-    new_state
-}
-
-fn press_joltage(machine: &Machine, state: (Vec<i32>, usize), button: usize) -> (Vec<i32>, usize) {
-    let mut new_state = state.clone();
-    for indicator in &machine.buttons[button] {
-        new_state.0[*indicator] += 1;
     }
     new_state.1 += 1;
     new_state
