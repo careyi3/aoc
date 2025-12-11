@@ -17,8 +17,8 @@ impl SolveResult for D11 {
             map.insert(key, values);
         }
 
-        let mut count = 0;
-        walk(&map, "you".to_string(), &mut count);
+        let mut cache: HashMap<String, i64> = HashMap::new();
+        let count = walk(&map, &mut cache, "you".to_string(), "out".to_string());
 
         return Ok(count.to_string());
     }
@@ -26,19 +26,46 @@ impl SolveResult for D11 {
     fn part2(_input: String, path: &String) -> Result<String> {
         let input = file_reader::read_lines(path);
 
-        return Ok(input.first().unwrap().to_string());
+        let mut map: HashMap<String, Vec<String>> = HashMap::new();
+        for line in input {
+            let key_values: Vec<&str> = line.split(": ").collect();
+            let key = key_values[0].to_string();
+            let values: Vec<String> = key_values[1].split(" ").map(|x| x.to_string()).collect();
+            map.insert(key, values);
+        }
+
+        let ans: i64 = [["svr", "fft"], ["fft", "dac"], ["dac", "out"]]
+            .iter()
+            .fold(1, |mut acc, x| {
+                let mut cache: HashMap<String, i64> = HashMap::new();
+                let val = walk(&map, &mut cache, x[0].to_string(), x[1].to_string());
+                acc *= val;
+                acc
+            });
+
+        return Ok(ans.to_string());
     }
 }
 
-fn walk(map: &HashMap<String, Vec<String>>, next: String, count: &mut i32) {
-    if next == "out".to_string() {
-        *count += 1;
-        return;
+fn walk(
+    map: &HashMap<String, Vec<String>>,
+    cache: &mut HashMap<String, i64>,
+    next: String,
+    dest: String,
+) -> i64 {
+    if cache.contains_key(&next) {
+        return cache[&next];
+    }
+    if next == dest {
+        return 1;
     }
     if !map.contains_key(&next) {
-        return;
+        return 0;
     }
+    let mut sum = 0;
     for key in &map[&next] {
-        walk(map, key.to_string(), count);
+        sum += walk(map, cache, key.to_string(), dest.to_string());
     }
+    cache.insert(next, sum);
+    return sum;
 }
