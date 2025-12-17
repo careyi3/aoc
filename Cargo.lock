@@ -170,6 +170,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "celluloid-core"
+version = "0.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fc740c83d3d2f43270164a644b35255239e18a34a9de5134a299ef18987ab3d4"
+dependencies = [
+ "chrono",
+ "serde",
+]
+
+[[package]]
 name = "cexpr"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -800,6 +810,7 @@ name = "utils"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "celluloid-core",
  "chrono",
  "inventory",
  "rand",

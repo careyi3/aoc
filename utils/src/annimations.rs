@@ -1,65 +1,8 @@
+use celluloid_core::{AnimationData, GridConfig, Metadata};
 use chrono::Utc;
-use serde::{Deserialize, Serialize};
-use std::cmp::Ordering;
 use std::fs;
 
-#[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq)]
-pub enum CellState {
-    Empty = 0,
-    Obstacle = 1,
-    Start = 2,
-    End = 3,
-    Visited = 4,
-    Path = 5,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct AnimationData {
-    name: String,
-    created_at: String,
-    grid_config: GridConfig,
-    metadata: Metadata,
-    frames: Vec<Frame>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct GridConfig {
-    width: usize,
-    height: usize,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct Metadata {
-    total_frames: usize,
-    has_path: bool,
-    frame_delay_ms: f64,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct Frame {
-    pub step: usize,
-    pub grid: Vec<Vec<u8>>,
-    pub message: String,
-    pub highlighted: Vec<(usize, usize)>,
-}
-
-#[derive(Copy, Clone, Eq, PartialEq)]
-pub struct State {
-    cost: usize,
-    position: (usize, usize),
-}
-
-impl Ord for State {
-    fn cmp(&self, other: &Self) -> Ordering {
-        other.cost.cmp(&self.cost)
-    }
-}
-
-impl PartialOrd for State {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.cmp(other))
-    }
-}
+pub use celluloid_core::Frame;
 
 pub fn save_annimation_data(
     output_name: String,
